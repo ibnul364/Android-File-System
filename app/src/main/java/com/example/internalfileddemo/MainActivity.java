@@ -1,7 +1,12 @@
 package com.example.internalfileddemo;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +16,7 @@ import android.widget.TextView;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private Button mBtnCreateFile, mBtnReadFile, mBtnFileList,mBtnDeleteFile;
     private EditText mFileContent;
 
-    private static final String FILE_NAME = "mytextfile.txt";
+    public static final String FILE_NAME = "mytextfile";
+    public static final String IMAGE_NAME = "red_flower";
+
+
 
 
     @Override
@@ -26,12 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mOutputText = findViewById(R.id.textView);
-        mBtnCreateFile = findViewById(R.id.button);
-        mBtnReadFile = findViewById(R.id.button2);
-        mBtnFileList = findViewById(R.id.button3);
-        mBtnDeleteFile = findViewById(R.id.button4);
-        mFileContent = findViewById(R.id.file_content);
+
 
         initView();
 
@@ -47,16 +51,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initView() {
-    }
-
     public void readFile(View view) {
+        StringBuilder sb = new StringBuilder();
+        InputStream inputStream = null;
+
+        try {
+            inputStream = openFileInput(FILE_NAME);
+            int read;
+            while ((read = inputStream.read())!=-1){
+                    sb.append((char)read);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mOutputText.setText(sb.toString());
     }
 
-    public void showFileList(View view) {
-    }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
     public void createFile(View view) {
+
+
         String data = mFileContent.getText().toString();
         FileOutputStream outputStream = null;
 
@@ -86,8 +103,74 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+
+
+
+//        Bitmap data = getImage();
+//
+//        BitmapDrawable drawable = (BitmapDrawable) getDrawable(R.drawable.red_flower);
+//
+//        FileOutputStream outputStream = null;
+//
+//        try {
+//
+//            outputStream = openFileOutput(IMAGE_NAME+".jpg",MODE_PRIVATE);
+//            data.compress(Bitmap.CompressFormat.JPEG,50,outputStream);
+//
+//            mOutputText.setText("Image Written");
+//
+//        } catch (FileNotFoundException e) {
+//
+//            e.printStackTrace();
+//
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//        }
+//        finally
+//        {
+//            if(outputStream != null){
+//                try{
+//                    outputStream.close();
+//                }
+//                catch(IOException e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+
+
+    }
+
+
+    public void showFileList(View view) {
     }
 
     public void deleteFile(View view) {
     }
+
+    private void initView() {
+        mOutputText = findViewById(R.id.textView);
+        mBtnCreateFile = findViewById(R.id.button);
+        mBtnReadFile = findViewById(R.id.button2);
+        mBtnFileList = findViewById(R.id.button3);
+        mBtnDeleteFile = findViewById(R.id.button4);
+        mFileContent = findViewById(R.id.file_content);
+    }
+
+
+//    private Bitmap getImage(){
+//
+//        Bitmap image = null;
+//
+//        try{
+//                InputStream inputStream = getAssets().open("red_flower.jpg");
+//                image = BitmapFactory.decodeStream(inputStream);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            return image;
+//    }
 }

@@ -37,24 +37,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20sp"
-        android:onClick="deleteFile"
-        android:text="Delete File" />
-
+        android:onClick="readFile"
+        android:text="Read File" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20sp"
-        android:onClick="showFileList"
-        android:text="File List" />
+        android:onClick="deleteFile"
+        android:text="Delete File" />
+
 
     <Button
         android:id="@+id/button4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20sp"
-        android:onClick="readFile"
-        android:text="Read File" />
+        android:onClick="showFileList"
+        android:text="File List" />
+
+
 
 </LinearLayout>
