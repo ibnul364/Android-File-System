@@ -52,21 +52,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void readFile(View view) {
-        StringBuilder sb = new StringBuilder();
-        InputStream inputStream = null;
-
-        try {
-            inputStream = openFileInput(FILE_NAME);
-            int read;
-            while ((read = inputStream.read())!=-1){
-                    sb.append((char)read);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        mOutputText.setText(sb.toString());
+//        StringBuilder sb = new StringBuilder();
+//        InputStream inputStream = null;
+//
+//        try {
+//            inputStream = openFileInput(FILE_NAME);
+//            int read;
+//            while ((read = inputStream.read())!=-1){
+//                    sb.append((char)read);
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        mOutputText.setText(sb.toString());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -74,51 +74,15 @@ public class MainActivity extends AppCompatActivity {
     public void createFile(View view) {
 
 
-        String data = mFileContent.getText().toString();
-        FileOutputStream outputStream = null;
-
-        try {
-
-             outputStream = openFileOutput(FILE_NAME,MODE_PRIVATE);
-             outputStream.write(data.getBytes());
-             outputStream.flush();
-             mOutputText.setText("File Written");
-
-        } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-        finally
-        {
-            if(outputStream != null){
-                try{
-                    outputStream.close();
-                }
-                catch(IOException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-
-
-
-
-//        Bitmap data = getImage();
-//
-//        BitmapDrawable drawable = (BitmapDrawable) getDrawable(R.drawable.red_flower);
-//
+//        String data = mFileContent.getText().toString();
 //        FileOutputStream outputStream = null;
 //
 //        try {
 //
-//            outputStream = openFileOutput(IMAGE_NAME+".jpg",MODE_PRIVATE);
-//            data.compress(Bitmap.CompressFormat.JPEG,50,outputStream);
-//
-//            mOutputText.setText("Image Written");
+//             outputStream = openFileOutput(FILE_NAME,MODE_PRIVATE);
+//             outputStream.write(data.getBytes());
+//             outputStream.flush();
+//             mOutputText.setText("File Written");
 //
 //        } catch (FileNotFoundException e) {
 //
@@ -141,6 +105,43 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
 
+
+
+        Bitmap data = getImage();
+
+        BitmapDrawable drawable = (BitmapDrawable) getDrawable(R.drawable.red_flower);
+        data = drawable.getBitmap();
+
+        FileOutputStream outputStream = null;
+
+        try {
+
+            outputStream = openFileOutput(IMAGE_NAME+".jpg",MODE_PRIVATE);
+            data.compress(Bitmap.CompressFormat.JPEG,50,outputStream);
+
+            mOutputText.setText("Image Written");
+
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        finally
+        {
+            if(outputStream != null){
+                try{
+                    outputStream.close();
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
     }
 
 
@@ -160,17 +161,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    private Bitmap getImage(){
-//
-//        Bitmap image = null;
-//
-//        try{
-//                InputStream inputStream = getAssets().open("red_flower.jpg");
-//                image = BitmapFactory.decodeStream(inputStream);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            return image;
-//    }
+    private Bitmap getImage(){
+
+        Bitmap image = null;
+
+        try{
+                InputStream inputStream = getAssets().open("red_flower.jpg");
+                image = BitmapFactory.decodeStream(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return image;
+    }
 }
