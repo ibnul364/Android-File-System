@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mOutputText;
     private Button mBtnCreateFile, mBtnReadFile, mBtnFileList,mBtnDeleteFile;
     private EditText mFileContent;
+    ImageView mImageView;
 
     public static final String FILE_NAME = "mytextfile";
     public static final String IMAGE_NAME = "red_flower";
@@ -52,21 +54,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void readFile(View view) {
-        StringBuilder sb = new StringBuilder();
+//        StringBuilder sb = new StringBuilder();
+        Bitmap bitmap = null;
         InputStream inputStream = null;
 
         try {
-            inputStream = openFileInput(FILE_NAME);
-            int read;
-            while ((read = inputStream.read())!=-1){
-                    sb.append((char)read);
-            }
-
+            inputStream = openFileInput(IMAGE_NAME+".jpg");
+            bitmap = BitmapFactory.decodeStream(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        mOutputText.setText(sb.toString());
+//        mOutputText.setText(sb.toString());
+        mImageView.setImageBitmap(bitmap);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -158,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
         mBtnFileList = findViewById(R.id.button3);
         mBtnDeleteFile = findViewById(R.id.button4);
         mFileContent = findViewById(R.id.file_content);
+        mImageView = findViewById(R.id.imageView);
     }
 
 
